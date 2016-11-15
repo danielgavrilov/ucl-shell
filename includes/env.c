@@ -8,6 +8,7 @@
 #include "linked_list.h"
 
 #define MAX_SIZE 255
+#define MAX_CWD_SIZE 10240
 
 // reads a single line from a file
 char* read_line(FILE *file) {
@@ -96,5 +97,6 @@ struct Env* get_env(char *profile_path) {
 }
 
 char* get_cwd() {
-  return getwd(NULL);
+  char *cwd = malloc(MAX_CWD_SIZE * sizeof(char));
+  return getcwd(cwd, MAX_CWD_SIZE);
 }
