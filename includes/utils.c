@@ -49,7 +49,8 @@ char* remove_trailing_newline(char *str) {
 int count_delimiter(char c, char *str) {
   int count = 0;
   int state = 0; // 0 = string, 1 = delimiter
-  for (int i = 0; i < strlen(str); i++) {
+  int i = 0;
+  for (i = 0; i < strlen(str); i++) {
     if (state == 0 && str[i] == c) {
       count++;
       state = 1;

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #include "command.h"
 #include "env.h"
@@ -45,7 +46,6 @@ void execute(char *dir, char *cmd, char *args[]) {
 
   snprintf(fullpath, len, "%s/%s", dir, cmd);
 
-  pid_t parent = getpid();
   pid_t pid = fork();
 
   if (pid == -1) {

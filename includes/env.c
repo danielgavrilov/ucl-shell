@@ -41,8 +41,10 @@ struct Node* parse_path(char *value) {
 
   // TODO: use strtok_r
 
+  char *token;
+
   for (
-    char *token = strtok(copy, delimiter);
+    token = strtok(copy, delimiter);
     token != NULL;
     token = strtok(NULL, delimiter)
   ) {

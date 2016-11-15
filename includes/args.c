@@ -9,8 +9,9 @@ char** convert_to_args(char *str) {
   int len = count_delimiter(delimiter[0], str);
   char **args = malloc(sizeof(char*) * (len + 1));
   int i = 0;
+  char *token;
   for (
-    char *token = strtok(str, delimiter);
+    token = strtok(str, delimiter);
     token != NULL;
     token = strtok(NULL, delimiter)
   ) {
