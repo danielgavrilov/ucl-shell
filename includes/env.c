@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "linked_list.h"
 
-#define MAX_SIZE 255
+#define MAX_SIZE 1024
 #define MAX_CWD_SIZE 10240
 
 // reads a single line from a file
