@@ -69,7 +69,9 @@ int main() {
 
       char *cmd = get_before(' ', input);
 
-      if (streq(cmd, "cd")) {
+      if (strlen(cmd) == 0) {
+        // do nothing
+      } else if (streq(cmd, "cd")) {
         char *rest = get_after(' ', input);
         if (streq(rest, "~") || strlen(rest) == 0) {
           cd(env->HOME);
