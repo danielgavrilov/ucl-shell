@@ -86,11 +86,18 @@ int main() {
         char *path = find_executable(env->PATH, cmd);
         char **args = convert_to_args(input);
 
+        // if executable is not found in PATH, check current directory
         if (path == NULL) {
-          fprintf(stderr, "Couldn't locate: %s\n", cmd);
-        } else {
+          char *cwd = get_cwd();
+          path = find_executable(cwd, cmd);
+          free(cwd);
+        }
+
+        if (path != NULL) {
           execute(path, cmd, args);
           free(path);
+        } else {
+          fprintf(stderr, "Couldn't locate: \"%s\". Check your PATH.\n", cmd);
         }
 
         free(args);
