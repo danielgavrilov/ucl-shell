@@ -6,7 +6,7 @@ struct Env {
   char *HOME;
 };
 
-int is_var(char *var, char *str);
+int is_var_assignment(char *var, char *str);
 struct Node* parse_path(char *path);
 struct Env* get_env(char *profile_path);
 char* get_cwd();

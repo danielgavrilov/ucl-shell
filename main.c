@@ -38,7 +38,6 @@ int main() {
     exit(1);
   }
 
-
   // if cd to HOME fails, cd to "/"
   if (cd(env->HOME) != 0) {
     cd("/");
@@ -55,10 +54,10 @@ int main() {
 
     if (starts_with("$", input)) {
 
-      if (is_var("PATH", input+1)) {
+      if (is_var_assignment("PATH", input+1)) {
         free(env->PATH);
         env->PATH = get_after('=', input+1);
-      } else if (is_var("HOME", input+1)) {
+      } else if (is_var_assignment("HOME", input+1)) {
         free(env->HOME);
         env->HOME = get_after('=', input+1);
       } else {
