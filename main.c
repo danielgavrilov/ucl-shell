@@ -9,6 +9,8 @@
 #include "command.h"
 #include "linked_list.h"
 
+// Prints the prompt to the user and reads a line from stdin.
+// Blocking until a line is read.
 ssize_t prompt(char **line, size_t *size) {
   char *cwd = get_cwd();
   printf("%s > ", cwd);
@@ -16,6 +18,7 @@ ssize_t prompt(char **line, size_t *size) {
   return getline(line, size, stdin);
 }
 
+// Implements cd. Returns 0 if sucessful.
 int cd(char *path) {
   int result = chdir(path);
   if (result != 0) {
@@ -43,6 +46,7 @@ int main() {
     cd("/");
   }
 
+  // store the input line from the terminal
   char *line = NULL;
   size_t size;
 
@@ -50,8 +54,14 @@ int main() {
 
     char *input = remove_trailing_newline(line);
 
-    if (streq(input, "exit")) exit(0);
+    // Handle "quit" and "exit" commands.
+    if (streq(input, "exit") ||
+        streq(input, "quit")) {
+      exit(0);
+    }
 
+    // Handle variable assignment, e.g. $HOME=/var
+    // Only supports "HOME" and "PATH".
     if (starts_with("$", input)) {
 
       if (is_var_assignment("PATH", input+1)) {
@@ -61,9 +71,10 @@ int main() {
         free(env->HOME);
         env->HOME = get_after('=', input+1);
       } else {
-        printf("Unknown variable setting: %s\n", input);
+        printf("Trying to set unknown variable: '%s'. Only 'HOME' and 'PATH' may be used.\n", input);
       }
 
+    // If line does not start with "$", then treat is as a command
     } else {
 
       char *cmd = get_before(' ', input);
@@ -71,6 +82,7 @@ int main() {
       if (strlen(cmd) == 0) {
         // do nothing
       } else if (streq(cmd, "cd")) {
+
         char *rest = get_after(' ', input);
         if (streq(rest, "~") || strlen(rest) == 0) {
           cd(env->HOME);
@@ -78,8 +90,11 @@ int main() {
           cd(rest);
         }
         free(rest);
+
       } else if (streq(cmd, "printenv")) {
+
         printf("PATH=%s\nHOME=%s\n", env->PATH, env->HOME);
+
       } else {
 
         char *path = find_executable(env->PATH, cmd);
@@ -92,11 +107,12 @@ int main() {
           free(cwd);
         }
 
+        // if a directory containing the executable was found, then execute it.
         if (path != NULL) {
           execute(path, cmd, args);
           free(path);
         } else {
-          fprintf(stderr, "Couldn't locate: \"%s\". Check your PATH.\n", cmd);
+          fprintf(stderr, "command not found: %s\n", cmd);
         }
 
         free(args);
