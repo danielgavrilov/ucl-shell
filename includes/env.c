@@ -54,11 +54,6 @@ struct Node* parse_path(char *path_string) {
   return path;
 }
 
-void initialise_env(struct Env *env) {
-  env->PATH = NULL;
-  env->HOME = NULL;
-}
-
 // Given a path to the "profile" file, it returns an Env struct with the parsed
 // variable assignments.
 struct Env* get_env(char *profile_path) {
@@ -66,7 +61,8 @@ struct Env* get_env(char *profile_path) {
   struct Env *env = malloc(sizeof(struct Env));
   FILE *file = fopen(profile_path, "r");
 
-  initialise_env(env);
+  env->PATH = NULL;
+  env->HOME = NULL;
 
   if (file) {
 
