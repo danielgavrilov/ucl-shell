@@ -64,14 +64,16 @@ int main() {
     // Only supports "HOME" and "PATH".
     if (starts_with("$", input)) {
 
-      if (is_var_assignment("PATH", input+1)) {
+      char *variable = input+1;
+
+      if (is_var_assignment("PATH", variable)) {
         free(env->PATH);
-        env->PATH = get_after('=', input+1);
-      } else if (is_var_assignment("HOME", input+1)) {
+        env->PATH = get_after('=', variable);
+      } else if (is_var_assignment("HOME", variable)) {
         free(env->HOME);
-        env->HOME = get_after('=', input+1);
+        env->HOME = get_after('=', variable);
       } else {
-        printf("Trying to set unknown variable: '%s'. Only 'HOME' and 'PATH' may be used.\n", input);
+        printf("Trying to set unknown variable: '%s'. Only 'HOME' and 'PATH' may be used.\n", variable);
       }
 
     // If line does not start with "$", then treat is as a command
