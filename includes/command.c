@@ -43,7 +43,7 @@ char* find_executable(char *path, char *filename) {
     path_list = path_list->next;
   }
   List_free(path_list);
-  return NULL;
+  return result;
 }
 
 // Given a directory path, filename and arguments, it executes the filename with
