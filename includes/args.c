@@ -9,7 +9,7 @@
 // Freeing the original string frees all separated strings.
 char** convert_to_args(char *str) {
   char *delimiter = " ";
-  int len = count_delimiter(delimiter[0], str);
+  int len = count_delimiter(delimiter[0], str) + 1;
   char **args = malloc(sizeof(char*) * (len + 1));
   int i = 0;
   char *token;
