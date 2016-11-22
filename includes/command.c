@@ -15,11 +15,13 @@
 int dir_contains(char *filepath, char *filename) {
   DIR *dp = opendir(filepath);
   if (dp == NULL) {
+    closedir(dp);
     return 0;
   }
   struct dirent *entry;
   while((entry = readdir(dp)) != NULL) {
     if (streq(entry->d_name, filename)) {
+      closedir(dp);
       return 1;
     }
   }
