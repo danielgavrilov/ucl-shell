@@ -8,7 +8,7 @@
 #include "linked_list.h"
 
 #define MAX_SIZE 1024
-#define MAX_CWD_SIZE 10240
+#define MAX_CWD_SIZE 1024
 
 // Reads a single line from a file. The returned string needs to be freed.
 char* read_line(FILE *file) {
