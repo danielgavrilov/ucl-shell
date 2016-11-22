@@ -38,11 +38,11 @@ char* find_executable(char *path, char *filename) {
   while (path_list != NULL) {
     if (dir_contains(path_list->path, filename)) {
       result = extract_chars(path_list->path, strlen(path_list->path));
-      List_free(path_list);
-      return result;
+      break;
     }
     path_list = path_list->next;
   }
+  List_free(path_list);
   return NULL;
 }
 
