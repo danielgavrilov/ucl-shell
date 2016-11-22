@@ -1,14 +1,8 @@
-Compiling
-=========
-
-Running `make` will create a `main.o` executable which starts the shell.
-
-
 File structure
 ==============
 
 main.c is the entry point. Utility functions are in the `includes` directory,
-their responsibilities are listed below:
+their responsibilities are below:
 
 - args.c: Converting input strings to arguments to be passed to executables.
 
